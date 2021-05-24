@@ -1,5 +1,4 @@
 'use strict';
-
 let RandNum, temp, play = 1;
 let p2totalscore, p1totalscore, currscore = [0, 0];
 let highscore = 0;
@@ -24,6 +23,9 @@ function intialiseGame() {
 
 intialiseGame();
 
+function playerTurn(){
+    document.querySelector('.dice').src = `dice-${7}.jpg`;
+}
 
 function result() {
     if (currscore[0] > currscore[1]) {
@@ -64,7 +66,10 @@ document.querySelector('.btn--roll').addEventListener('click', () => {
             activeplayer = activeplayer === 0 ? 1 : 0;
             if (activeplayer === 0) {
                 result();
+            }else{
+                playerTurn();
             }
+            
         }
     }
 });
@@ -79,8 +84,30 @@ document.querySelector('.btn--hold').addEventListener('click', () => {
         if (activeplayer === 0) {
             result();
         }
+        else{
+            playerTurn();
+        }
     }
 });
 
 
 document.querySelector('.btn--new').addEventListener('click', intialiseGame);
+
+//Modal-Instructions
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.close-modal');
+
+const closeModal = function () {
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
+};
+
+btnCloseModal.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
+
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
